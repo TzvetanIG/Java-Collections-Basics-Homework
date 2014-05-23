@@ -17,6 +17,7 @@ public class Crawler {
 	public void crawl(int levelsNumber) throws IOException {
 
 		if (levelsNumber < 1) {
+			System.out.println("----------------------------------------------------------------------------------------------------------------------------");
 			return;
 		}
 
@@ -44,12 +45,11 @@ public class Crawler {
 
 			while (matcher.find()) {
 				count++;
-				System.out.println(count+". " + matcher.group().split("href[\\s]*=\\s*\"")[1]);
-				Crawler newUrl = new Crawler(matcher.group());
+				System.out.println(levelsNumber+"."+count+". " + matcher.group().split("href[\\s]*=\\s*\"")[1]);
+				Crawler newUrl = new Crawler(matcher.group().split("href[\\s]*=\\s*\"")[1]);
 				urls.add(newUrl);
 				newUrl.crawl(levelsNumber - 1);
 			}
-			System.out.println("----------------------------------------------------------------------------------------------------------------------------");
 		} catch (IOException e) {
 			return;
 		} finally {
